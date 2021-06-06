@@ -12,4 +12,7 @@
 #define mapY 20
 #define tile 1.2
 #define EXIT_CODE 69
+#define depth 20.0f
+#define texturex 5
+#define texturey 5 
 #define IX(i,j) (i+j*w)

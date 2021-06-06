@@ -18,6 +18,12 @@ extern double playerX;
 extern double playerY;
 extern double playerA;
 
+double cameraz = 3.00;
+extern double gunx;
+extern double guny;
+extern int shoot;
+
+
 void update(int code){
     switch(code){
         case 87: {
@@ -36,6 +42,14 @@ void update(int code){
             playerX -= speed * sin(radians(playerA));
             playerY += speed * cos(radians(playerA));
         } break;
+        case 32:{
+            if(!shoot){
+                gunx -= 6;
+                guny -= 6;
+                shoot = 1;
+            }
+        }
+        break;
     }
 }
 
@@ -46,8 +60,9 @@ LRESULT HookCallback(int nCode, WPARAM wParam, LPARAM lParam){
             if(kbStruct.vkCode != EXIT_CODE){
                 update((int)kbStruct.vkCode);
             }
-            else
+            else {
                 exit(1);
+            }
         }
     }
     return CallNextHookEx(hook, nCode, wParam, lParam);

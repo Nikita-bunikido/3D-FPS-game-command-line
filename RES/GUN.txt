@@ -1,0 +1,22 @@
+a_!_aaaaaaaaaaaaaa
+/   \aaaaaaaaaaaaa
+|\   \aaaaaaaaaaaa
+| \ \ \aaaaaaaaaaa
+a\ \ \ \aaaaaaaaaa
+aa\ \   \aaaaaaaaa
+aa|\ \ \ \aaaaaaaa
+aa| \ \ \ \aaaaaaa
+aa| |\ \   \aaaaaa
+aa| |a\ \   \aaaaa
+aa\ |_|\ \   \aaaa
+aaa\  | \ \   \aaa
+aaaa\ |  \ \   \aa
+aaaaa\|   \ \  _\a
+aaaaaa|    \ \/  \
+aaaaaa|     \ |  |
+aaaaaa|     |\|__|
+aaaaaaa\    |  |aa
+aaaaaaaa\   |  |aa
+aaaaaaaaa\  |  |aa
+aaaaaaaaaa\ |  |aa
+aaaaaaaaaaa\|__|aa
