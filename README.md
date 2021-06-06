@@ -1,25 +1,37 @@
 ## 3D-FPS-game-command-line
+### Version 2.0
 
 This is a pseudo 3d game written in C programming language, and running on the command line.
 
-Here are some **examples**:
+----
+
+What's new in **2.0 version**? 
+Added:
+- Textured floors
+- Textured walls
+- Working weapon
+- More than 1 texture on map
+- Fixed bugs
+
+Here are some **demonstration** of how does it work:
 
 ---
- 
-> ![Alt text](https://github.com/Nikita-bunikido/3D-FPS-game-command-line/blob/main/1.png "Optional title")
+
+ ![Alt text](https://github.com/Nikita-bunikido/3D-FPS-game-command-line/blob/main/5.png "Optional title")
 
 ---
 
->The farther away the wall, the darker the symbol:
+ASCII weapon. (Probel to shoot):
 
->![Alt text](https://github.com/Nikita-bunikido/3D-FPS-game-command-line/blob/main/2.png "Optional title")
+![Alt text](https://github.com/Nikita-bunikido/3D-FPS-game-command-line/blob/main/6.png "Optional title")
 
 ---
 
->The stars on the sky are also randomly generated:
+Working textures (5 * 5) perspective:
 
->![Alt text](https://github.com/Nikita-bunikido/3D-FPS-game-command-line/blob/main/3.png "Optional title")
+![Alt text](https://github.com/Nikita-bunikido/3D-FPS-game-command-line/blob/main/7.png "Optional title")
 
 It works stably on the **Windows 10** command line. In earlier OS versions, updating the command line may be slow.
+
 
 **Enjoy!**
