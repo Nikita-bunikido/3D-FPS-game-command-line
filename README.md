@@ -13,7 +13,7 @@ Added:
 - More than 1 texture on map
 - Fixed bugs
 
-Here are some **demonstration** of how does it work:
+Here is some **demonstration** of how does it work:
 
 ---
 
