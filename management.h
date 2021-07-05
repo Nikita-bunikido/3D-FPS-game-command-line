@@ -22,48 +22,43 @@ double cameraz = 3.00;
 extern double gunx;
 extern double guny;
 extern int shoot;
+extern int shet;
+extern int re;
+extern int restart;
+extern double enx;
+extern char cs;
+extern int se;
 
-
-void update(int code){
-    switch(code){
-        case 87: {
-            playerX += speed * cos(radians(playerA));
-            playerY += speed * sin(radians(playerA));
-        } break;
-        case 83: {
-            playerX -= speed * cos(radians(playerA));
-            playerY -= speed * sin(radians(playerA));
-        } break;
-        case 65: {
-            playerX += speed * sin(radians(playerA));
-            playerY -= speed * cos(radians(playerA));
-        } break;
-        case 68: {
-            playerX -= speed * sin(radians(playerA));
-            playerY += speed * cos(radians(playerA));
-        } break;
-        case 32:{
-            if(!shoot){
-                gunx -= 6;
-                guny -= 6;
-                shoot = 1;
-            }
-        }
-        break;
-    }
+void cameramove(void){
+    cameraz = cos(shet * 0.2) * 2 + 3;
 }
 
-LRESULT HookCallback(int nCode, WPARAM wParam, LPARAM lParam){
-    if(nCode >= 0){
-        if(wParam == WM_KEYDOWN){
-            kbStruct = *((KBDLLHOOKSTRUCT*)lParam);
-            if(kbStruct.vkCode != EXIT_CODE){
-                update((int)kbStruct.vkCode);
-            }
-            else {
-                exit(1);
+void update(void){ 
+
+        if(GetKeyState(87) & 0x8000){
+            playerX += speed * cos(radians(playerA));
+            playerY += speed * sin(radians(playerA));
+            cameramove();
+        }
+        if(GetKeyState(83) & 0x8000){
+            playerX -= speed * cos(radians(playerA));
+            playerY -= speed * sin(radians(playerA));
+            cameramove();
+        }
+        if(GetKeyState(65) & 0x8000){
+            playerX += speed * sin(radians(playerA));
+            playerY -= speed * cos(radians(playerA));
+            cameramove();
+        }
+        if(GetKeyState(68) & 0x8000){
+            playerX -= speed * sin(radians(playerA));
+            playerY += speed * cos(radians(playerA));
+            cameramove();
+        }
+        if(GetKeyState(32) & 0x8000){
+            if(!shoot && !re && !restart){
+                shoot = 1;
+                se = 1;
             }
         }
-    }
-    return CallNextHookEx(hook, nCode, wParam, lParam);
 }

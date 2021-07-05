@@ -5,6 +5,7 @@ in command promt.
 *****************************************/
 
 #include <stdio.h>
+#include <winsock2.h>
 #include <windows.h>
 #include <stdlib.h>
 #include <malloc.h>
@@ -27,13 +28,9 @@ int what[w];
 double angles[w];
 double wallX[w];
 double wallY[w];
-
-FILE *gun;
-char _gun[418];
-double guny = 16;
-double gunx = 19;
-int shet = 0;
-int shoot = 0;
+char cs;
+int hp = 100;
+double statuss = 0;
 
 double radians (double a){
     return a * M_PI / 180;
@@ -41,9 +38,18 @@ double radians (double a){
 
 double RAYCOLLISION(double x, double y, int ii){
     int i, j;
+    if(x >= enx && x <= enx + enemysize && y >= eny && y <= eny + enemysize && cs != 'o'){
+        what[ii] = 2;
+        if((x > enx - 0.01 && x < enx + enemysize + 0.01) && (x > enx + enemysize - 0.01 && x < enx + enemysize + 0.01))
+            offsets[ii] = fmod(x, enemysize) * enemyxscale;
+        else
+            offsets[ii] = fmod(y, enemysize) * enemyxscale;
+        return sqrt(pow((double)(x - playerX), 2) + pow((double)(y - playerY), 2));
+    }
+
     for(i = 0; i < mapY; i++){
         for(j = 0; j < mapX; j++){
-            if((x > j * tile && x < j * tile + tile) && (y > i * tile && y < i * tile + tile) && ((MAP[j][i] == '#') || (MAP[j][i] == '@'))){
+            if((x > j * tile && x < j * tile + tile) && (y > i * tile && y < i * tile + tile) && ((MAP[j][i] == '#') || (MAP[j][i] == '@') || (MAP[j][i] == '0') || (MAP[j][i] == 'h'))){
                 if((x > j * tile - 1 && x < j * tile + 1) && (x > j * tile + tile - 1 && x < j * tile + tile + 1))   //If it is horizontal
                     offsets[ii] = fmod(x, tile) * texturescale;                //Offset with horizontal.
                 else
@@ -51,6 +57,8 @@ double RAYCOLLISION(double x, double y, int ii){
                 switch(MAP[j][i]){
                     case '#': what[ii] = 0; break;
                     case '@': what[ii] = 1; break;
+                    case '0': what[ii] = 3; break;
+                    case 'h': what[ii] = 4; break;
                 }
                 wallX[ii] = x;
                 wallY[ii] = y;
@@ -111,27 +119,93 @@ int main(void){
             skymap[i] = ' ';
     }
 
-    char c;
-    i = 0;
-    gun = fopen("RES/GUN.txt", "r");
-    while((c = fgetc(gun)) != EOF)
-        if(c != '\n')
-            _gun[i++] = c;        //Copy all file to _gun string
-    _gun[i] = '\0';
-    fclose(gun);
+    gunsetup();
 
-    hook = SetWindowsHookEx(WH_KEYBOARD_LL, HookCallback, NULL, 0);
-    MSG message;
+    printf("NSHOOT v3.0.0\n");
+    printf("Client - c\nServer - s\nOffline - o\n");
+    cs = getchar();
+
+    if(cs == 'c' || cs == 's'){
+        onlinesetup();
+    }
+
+        double data[4];
+        char stringh[1000];
+
+
+    if(cs == 'c'){
+        printf("Server IP:\n");
+        scanf("\n%s", stringh);
+        sa.sin_addr.S_un.S_addr = inet_addr(stringh);
+        connect(s, &sa, sizeof(sa));
+    }
+    else
+    if(cs == 's'){
+
+        bind(s, &sa, sizeof(sa));
+        listen(s, 100);
+
+        SOCKADDR_IN client_addr;
+
+        int client_addr_size = sizeof(client_addr);
+
+
+        while(!(client_socket = accept(s, &client_addr, &client_addr_size)))
+            ;
+    }
 
     while(1){
-        PeekMessageA(&message, NULL, 0, 0, PM_REMOVE);
+        //                cameraz = (p.y - 300) / 50.0;
+        if(cameraz <= 3)
+            cameraz = 3;
         castrays();
         newscreen();
         playerA = p.x;
         GetCursorPos(&p);
+        if(cs == 'c'){
+            data[0] = playerX;
+            data[1] = playerY;
+            data[2] = statuss;
+            send(s, data, sizeof(data), 0);
+            recv(s, data, sizeof(data), 0);
+            enx = data[0];
+            eny = data[1];
+            if(data[2]){
+                hp -= 10;
+                playerX += 0.1;
+                playerY += 0.1;
+            }
+        }
+        else if(cs == 's'){
+            if(recv(client_socket, data, sizeof(data), 0) > 0){
+                //printf("%f %f\n", data[0], data[1]);
+                enx = data[0];
+                eny = data[1];
+                if(data[2]){
+                    hp -= 10;
+                    playerX += 0.1;
+                    playerY += 0.1;
+                }
+                data[0] = playerX;
+                data[1] = playerY;
+                data[2] = statuss;
+                send(client_socket, data, sizeof(data), 0);
+            }
+        }
         printf("%s",screen);
         shet++;
+        if(shoot)
+            shootshet++;
+        else
+            reshet++;
+        update();
+        if(hp <= 0){
+            hp = 100;
+            playerX = tile + tile / 3;
+            playerY = tile + tile / 3;
+        }
+        Sleep(20);
     }
     free(screen);
     free(skymap);
-}
+} 

@@ -4,15 +4,21 @@
 
 #define w 120
 #define h 30
-#define speed 0.1
+#define speed 0.06
 #define FOV 120.0f
 #define NUM_RAYS 120
 #define MAX_DEPTH 100.0f
-#define mapX 20
-#define mapY 20
+#define mapX 10
+#define mapY 10
 #define tile 1.2
 #define EXIT_CODE 69
 #define depth 20.0f
-#define texturex 5
-#define texturey 5 
+#define texturex 7
+#define texturey 7 
+#define shoottime 5
+#define retime 10
+#define restartspeed 0.4
+#define enemysize 0.4
+#define enemysizex 3
+#define enemysizey 6
 #define IX(i,j) (i+j*w)
