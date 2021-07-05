@@ -1,35 +1,39 @@
 ## 3D-FPS-game-command-line
-### Version 2.0
+### Version 3.0
 
 This is a pseudo 3d game written in C programming language, and running on the command line.
 
+Now you can play with your friends. In version 3.0 added a loacl network multiplayer.
+
 ----
 
-What's new in **2.0 version**? 
+!NEW **3.0 version**
 Added:
-- Textured floors
-- Textured walls
-- Working weapon
-- More than 1 texture on map
+- Local network multplayer
+- More textures on walls
+- Menu
+- Reworked weapon
 - Fixed bugs
 
 Here is some **demonstration** of how does it work:
 
 ---
 
- ![Alt text](https://github.com/Nikita-bunikido/3D-FPS-game-command-line/blob/main/5.png "Optional title")
+7x7 textures:
+
+ ![Alt text](https://github.com/Nikita-bunikido/3D-FPS-game-command-line/blob/main/p1.png "Optional title")
 
 ---
 
 ASCII weapon. (Probel to shoot):
 
-![Alt text](https://github.com/Nikita-bunikido/3D-FPS-game-command-line/blob/main/6.png "Optional title")
+![Alt text](https://github.com/Nikita-bunikido/3D-FPS-game-command-line/blob/main/p2.png "Optional title")
 
 ---
 
-Working textures (5 * 5) perspective:
+Multiplayer test:
 
-![Alt text](https://github.com/Nikita-bunikido/3D-FPS-game-command-line/blob/main/7.png "Optional title")
+![Alt text](https://github.com/Nikita-bunikido/3D-FPS-game-command-line/blob/main/p3.png "Optional title")
 
 It works stably on the **Windows 10** command line. In earlier OS versions, updating the command line may be slow.
 
