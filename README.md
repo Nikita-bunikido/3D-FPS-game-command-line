@@ -20,11 +20,11 @@ In repository you need to find file "NSHOOT.exe",  and run it.
 - #### Step 3 - setting up multiplayer
 If you want to play online with your friend, you need to setup a multiplayer.
 **Your computer and a friend's computer must necessarily be connected to the same local network to play online.** 
-Than on your computer in menu of the game you need to choose _'s' - Server_. And your friend need to choose _'c' - Client_. Your friend need to know your IPv4 adress. If you don't know it, open the _command line_ (_Win_ + _R_), write _cmd_ and paste the command:
+Then on your computer in menu of the game you need to choose _'s' - Server_. And your friend need to choose _'c' - Client_. Your friend need to know your IPv4 adress. If you don't know it, open the _command line_ (_Win_ + _R_), write _cmd_ and paste the command:
 
     ipconfig
 
-Than write this adress on client and enjoy!
+Then write this adress on client and enjoy!
 
 If you want to play _offline_ write _'o' - Offline_ in the menu.
 
