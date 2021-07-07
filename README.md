@@ -116,13 +116,9 @@ Here is some **demonstration** of how does it work:
 
 ![Alt text](img/8.png "Optional title")
 
----
-
 ASCII weapon. (Probel to shoot):
 
 ![Alt text](img/9.png "Optional title")
-
----
 
 Multiplayer test:
 
