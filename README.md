@@ -5,6 +5,8 @@ This is a pseudo 3d game written in C programming language, and running on the w
 Engine of this game uses RayCasting technology to draw lines onscreen. It creates an illusion of a 3 dimensional game, but really
 it is only a 2d map.
 
+![Alt text](img/g.gif "Optional title")
+
 ### Installation (Windows 10)
 
 It works stably on the __Windows 10__ command line. In earlier OS versions, updating the command line may be slow.
