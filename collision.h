@@ -1,3 +1,7 @@
+/*****************************************
+-Nikita Donskov 2021
+*****************************************/
+
 #include "settings.h"
 
 extern char MAP[mapX][mapY];

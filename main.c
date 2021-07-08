@@ -19,19 +19,22 @@ in command promt.
 #include "map.h"
 
 const double DELTA_ANGLE = FOV / NUM_RAYS;
+
 double playerX = tile + tile / 3;
 double playerY = tile + tile / 3;
 double playerA = 0;
+
 double distances[w];
+double angles[w];
 int offsets[w];
 int what[w];
-double angles[w];
-double wallX[w];
-double wallY[w];
-char cs;
-int hp = 100;
+
 double statuss = 0;
 double ban = 0;
+double movx, movy;
+int hp = 100;
+int EXIT = 0;
+char cs;
 
 double radians (double a){
     return a * M_PI / 180;
@@ -61,8 +64,6 @@ double RAYCOLLISION(double x, double y, int ii){
                     case '0': what[ii] = 3; break;
                     case 'h': what[ii] = 4; break;
                 }
-                wallX[ii] = x;
-                wallY[ii] = y;
                 return sqrt(pow((double)(x - playerX), 2) + pow((double)(y - playerY), 2));
             }
         }
@@ -105,8 +106,6 @@ int main(void){
         offsets[i] = 0;
         what[i] = 0;
         angles[i] = 0;
-        wallX[i] = 0;
-        wallY[i] = 0;
     }
 
     screen = calloc(w * h, sizeof(char));
@@ -170,10 +169,15 @@ int main(void){
             recv(s, data, sizeof(data), 0);
             enx = data[0];
             eny = data[1];
-            if(data[2]){
+             if(data[2]){
                 hp -= 10;
-                playerX += 0.1;
-                playerY += 0.1;
+
+                movx = (enx <= playerX) ? hitoffset : -hitoffset;
+                movy = (eny <= playerY) ? hitoffset : -hitoffset;
+                if(collision(playerX + movx, playerY))
+                    playerX += movx;
+                if(collision(playerX, playerY + movy))
+                    playerY += movy;
             }
             if(data[3])
                 exit(0);
@@ -185,8 +189,13 @@ int main(void){
                 eny = data[1];
                 if(data[2]){
                     hp -= 10;
-                    playerX += 0.1;
-                    playerY += 0.1;
+
+                    movx = (enx <= playerX) ? hitoffset : -hitoffset;
+                    movy = (eny <= playerY) ? hitoffset : -hitoffset;
+                    if(collision(playerX + movx, playerY))
+                        playerX += movx;
+                    if(collision(playerX, playerY + movy))
+                        playerY += movy;
                 }
                 data[0] = playerX;
                 data[1] = playerY;
@@ -208,7 +217,10 @@ int main(void){
             playerY = tile + tile / 3;
         }
         Sleep(20);
+        if(EXIT)
+            break;
     }
     free(screen);
     free(skymap);
+    return 0;
 } 

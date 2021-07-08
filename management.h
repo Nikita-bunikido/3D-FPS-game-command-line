@@ -11,29 +11,31 @@
 
 POINT p;
 
-extern double radians (double a);
 extern double playerX;
 extern double playerY;
 extern double playerA;
 
-double cameraz = 3.00;
 extern double gunx;
 extern double guny;
+extern double ban;
+extern double enx;
 extern int shoot;
 extern int shet;
 extern int re;
 extern int restart;
-extern double enx;
-extern char cs;
 extern int se;
-extern double ban;
+extern int EXIT;
+extern char cs;
+
+double cameraz = 3.00;
+
+extern double radians (double a);
 
 void cameramove(void){
     cameraz = cos(shet * 0.2) * 2 + 3;
 }
 
-void update(void){ 
-
+void update(void){
         if(GetKeyState(87) & 0x8000 && collision(playerX + (speed * coloffset) * cos(radians(playerA)), playerY + speed * sin(radians(playerA)))){
             playerX += speed * cos(radians(playerA));
             playerY += speed * sin(radians(playerA));
@@ -62,4 +64,6 @@ void update(void){
         }
         if(GetKeyState('B') & 0x8000 && cs == 's')
             ban = 1;
+        if(GetKeyState(EXIT_CODE) & 0x8000)
+            EXIT = 1;
 }

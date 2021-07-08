@@ -24,10 +24,13 @@
 #define retime 10
 #define restartspeed 0.4f
 
-#define enemysize 0.4
+#define enemysize 0.4f
 #define enemysizex 3
 #define enemysizey 6
+#define hitoffset 0.2f
 
 #define coloffset 1.8f
+
+#define EXIT_CODE 69
 
 #define IX(i,j) (i+j*w)

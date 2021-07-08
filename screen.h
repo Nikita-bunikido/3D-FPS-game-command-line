@@ -12,32 +12,33 @@
 #include "online.h"
 
 extern const double DELTA_ANGLE;
+
 extern double distances[];
-extern char _gun[];
+extern double angles[];
+extern int what[];
 extern int offsets[];
+extern char _gun[];
+
 extern double guny;
 extern double gunx;
-extern int shet;
-extern int what[];
 extern double playerA;
-extern double angles[];
-extern double wallX[];
-extern double wallY[];
+extern double statuss;
+extern int shet;
 extern int shoot;
 extern int hp;
 extern int hits;
-extern double statuss;
-extern double radians (double a);
 
-char shading[] = "@%%#*+=-:. ";
-char *skymap;
-char *screen;
-char texture[] = "# # # # # ";
+extern double radians (double a);
 
 const double texturescale = texturex / tile;
 
 const int enemyxscale = enemysizex / enemysize;
 const int enemyyscale = enemysizey / enemysize;
+int tx, ty;
+
+char shading[] = "@%%#*+=-:. ";
+char *skymap;
+char *screen;
 
 char texture1[texturex][texturey] = {
 "## # ##",
@@ -98,44 +99,35 @@ char enemy[enemysizey][enemysizex] = {
 "| |"
 };
 
-int tx, ty;
-
 double convert(double value,double From1,double From2,double To1,double To2)
 {
       return (value-From1)/(From2-From1)*(To2-To1)+To1;
 }
 
+int flr(int val, int min, int max){
+    val = (val > max) ? max : val;
+    val = (val < min) ? min : val;
+    return val;
+}
+
 void newscreen(void){
     int i, j, index, q = 0, q2 = 0;
     double coeff = depth / strlen(shading) - 1;
-    double texturecoeff = h / strlen(texture) - 1;
     double top, bottom;
-
 
     playerA = fmod(playerA, 360);
 
-
     for(j = 0; j < h; j++)
         for(i = 0; i < w; i++){
+
             top = (h / 2) * (1 - 1 / distances[i]) - (cameraz - 3.0);         //Top and bottom of the line
             bottom = (h / 2) * (1 + 1 / distances[i]) - (cameraz - 3.0);
 
             if(j >= top && j <= bottom){
-
-                if(what[i] != 2){
-                    index = convert(j - top, 0, bottom - top, 0, texturex);    //Converting J variable to scale the line
-                    if(index > texturex - 1)
-                        index = texturex - 1;
-                    if(index < 0)
-                        index = 0;
-                }
-                else {
-                    index = convert(j - top, 0, bottom - top, 0, enemysizey - 1);    //Converting J variable to scale the line
-                    if(index > enemysizey - 2)
-                        index = enemysizey - 2;
-                    if(index < 0)
-                        index = 0;
-                }
+                if(what[i] != 2)
+                    index = flr(convert(j - top, 0, bottom - top, 0, texturex), 0, texturex - 1);    //Converting J variable to scale the line
+                else
+                    index = flr(convert(j - top, 0, bottom - top, 0, enemysizey - 1), 0, enemysizey - 1);    //Converting J variable to scale the lin
 
                 if(distances[i] < 5){                                       //Texture view distance
                     switch(what[i]){
@@ -147,11 +139,7 @@ void newscreen(void){
                     }
                 }
                 else {
-                    index = distances[i] / coeff;                          //Else standart shading 
-                    if(index > strlen(shading) - 1)
-                        index = strlen(shading) - 1;
-                    if(index < 0)
-                        index = 0;
+                    index = flr(distances[i] / coeff, 0, strlen(shading) - 1);  //Else standart shading 
                     screen[IX(i,j)] = shading[index];
                 }
             }
@@ -159,19 +147,13 @@ void newscreen(void){
             if(j > bottom){
                 double dy = j - (h / 2.0) + cameraz;
                 double deg = radians(angles[i]);
+
                 tx = playerX + cos(deg) * 33 / dy;
                 ty = playerY + sin(deg) * 33 / dy;
-                tx = (tx + (texturex-1))%(texturex-1);
-                ty = (ty + (texturey-1))%(texturey-1); 
 
-                if(tx > texturex - 1)
-                    tx = texturex - 1;
-                if(ty > texturey - 1)
-                    ty = texturey - 1;
-                if(tx < 0)
-                    tx = 0;
-                if(ty < 0)
-                    ty = 0;
+                tx = flr((tx + (texturex-1))%(texturex-1), 0, texturex - 1);
+                ty = flr((ty + (texturey-1))%(texturey-1), 0, texturey - 1);
+
                 screen[IX(i,j)] = floorr[tx][ty]; 
             }            //Floor in the second half of sreen
             else
@@ -185,8 +167,7 @@ void newscreen(void){
                         gunx -= 5;
                         guny -= 5;
                     }
-                    re = 0;
-                    reshet = 0;
+                    re = reshet = 0;
                     restart = 1;
                 }
                 if((i > w - gunx) && (j > h - guny)){  //If it is gun zone
@@ -201,8 +182,7 @@ void newscreen(void){
             else
             {
                 if(shootshet > shoottime){
-                    shootshet = 0;
-                    shoot = 0;
+                    shootshet = shoot = 0;
                     re = 1;
                 }
                 if((i > w - explx) && (j > h - exply)){  //If it is gun zone
@@ -226,13 +206,13 @@ void newscreen(void){
             if(i == (w / 2)-1 && j == (h / 2))
                 screen[IX(i,j)] = '-';
             if(i == (w / 2)+1 && j == (h / 2))
-                screen[IX(i,j)] = '-';
+                screen[IX(i,j)] = '-'; 
 
         }
 
+
     /*STATISTICS*/
-    char HPS[100];
-    char kills[100];
+    char HPS[100], kills[100];
 
     itoa(hp, HPS, 10);
     strcat(HPS, " HP | ");

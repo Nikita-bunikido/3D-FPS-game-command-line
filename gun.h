@@ -11,8 +11,6 @@
 
 FILE *gun;
 FILE *explos;
-char _gun[gunsizex * gunsizey];
-char _expl[explsizex * explsizey];
 double guny = gunsizey;
 double gunx = gunsizex;
 int exply = explsizey;
@@ -25,6 +23,8 @@ int reshet = 0;
 int restart = 0;
 int se;
 int hits = 0;
+char _gun[gunsizex * gunsizey];
+char _expl[explsizex * explsizey];
 
 void gunsetup(void){
     int i;
