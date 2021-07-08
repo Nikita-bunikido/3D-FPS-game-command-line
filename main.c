@@ -31,6 +31,7 @@ double wallY[w];
 char cs;
 int hp = 100;
 double statuss = 0;
+double ban = 0;
 
 double radians (double a){
     return a * M_PI / 180;
@@ -83,12 +84,12 @@ void castrays(void){
         for(s = 0; s < MAX_DEPTH; s++){
             end = 0;
             if((prom = RAYCOLLISION(rayX, rayY, i)) != -1){
-                distances[i] = prom;
+                distances[i] = prom * (cos(radians((rayA) - playerA)) / 1.0001); //Fixing fish eye effect
                 end = 1;
                 break;
             }
-            rayX += 0.2f * cos(rayR);
-            rayY += 0.2f * sin(rayR);
+            rayX += 0.1f * cos(rayR);
+            rayY += 0.1f * sin(rayR);
         }
         if(!end)
             distances[i] = MAX_DEPTH;
@@ -121,7 +122,7 @@ int main(void){
 
     gunsetup();
 
-    printf("NSHOOT v3.0.0\n");
+    printf("NSHOOT v3.1.0\n");
     printf("Client - c\nServer - s\nOffline - o\n");
     cs = getchar();
 
@@ -129,8 +130,8 @@ int main(void){
         onlinesetup();
     }
 
-        double data[4];
-        char stringh[1000];
+        double data[4]; //Array for local network
+        char stringh[1000]; //Ip adress
 
 
     if(cs == 'c'){
@@ -155,7 +156,6 @@ int main(void){
     }
 
     while(1){
-        //                cameraz = (p.y - 300) / 50.0;
         if(cameraz <= 3)
             cameraz = 3;
         castrays();
@@ -175,6 +175,8 @@ int main(void){
                 playerX += 0.1;
                 playerY += 0.1;
             }
+            if(data[3])
+                exit(0);
         }
         else if(cs == 's'){
             if(recv(client_socket, data, sizeof(data), 0) > 0){
@@ -189,6 +191,7 @@ int main(void){
                 data[0] = playerX;
                 data[1] = playerY;
                 data[2] = statuss;
+                data[3] = ban;
                 send(client_socket, data, sizeof(data), 0);
             }
         }

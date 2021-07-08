@@ -7,10 +7,8 @@
 #include <stdlib.h>
 
 #include "settings.h"
+#include "collision.h"
 
-LRESULT HookCallback(int nCode, WPARAM wParam, LPARAM lParam);
-HHOOK hook;
-KBDLLHOOKSTRUCT kbStruct;
 POINT p;
 
 extern double radians (double a);
@@ -28,6 +26,7 @@ extern int restart;
 extern double enx;
 extern char cs;
 extern int se;
+extern double ban;
 
 void cameramove(void){
     cameraz = cos(shet * 0.2) * 2 + 3;
@@ -35,22 +34,22 @@ void cameramove(void){
 
 void update(void){ 
 
-        if(GetKeyState(87) & 0x8000){
+        if(GetKeyState(87) & 0x8000 && collision(playerX + (speed * coloffset) * cos(radians(playerA)), playerY + speed * sin(radians(playerA)))){
             playerX += speed * cos(radians(playerA));
             playerY += speed * sin(radians(playerA));
             cameramove();
         }
-        if(GetKeyState(83) & 0x8000){
+        if(GetKeyState(83) & 0x8000 && collision(playerX - (speed * coloffset) * cos(radians(playerA)), playerY - speed * sin(radians(playerA)))){
             playerX -= speed * cos(radians(playerA));
             playerY -= speed * sin(radians(playerA));
             cameramove();
         }
-        if(GetKeyState(65) & 0x8000){
+        if(GetKeyState(65) & 0x8000 && collision(playerX + (speed * coloffset) * cos(radians(playerA)), playerY - speed * sin(radians(playerA)))){
             playerX += speed * sin(radians(playerA));
             playerY -= speed * cos(radians(playerA));
             cameramove();
         }
-        if(GetKeyState(68) & 0x8000){
+        if(GetKeyState(68) & 0x8000 && collision(playerX - (speed * coloffset) * cos(radians(playerA)), playerY + speed * sin(radians(playerA)))){
             playerX -= speed * sin(radians(playerA));
             playerY += speed * cos(radians(playerA));
             cameramove();
@@ -61,4 +60,6 @@ void update(void){
                 se = 1;
             }
         }
+        if(GetKeyState('B') & 0x8000 && cs == 's')
+            ban = 1;
 }

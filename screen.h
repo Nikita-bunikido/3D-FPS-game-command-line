@@ -25,6 +25,7 @@ extern double wallX[];
 extern double wallY[];
 extern int shoot;
 extern int hp;
+extern int hits;
 extern double statuss;
 extern double radians (double a);
 
@@ -39,13 +40,13 @@ const int enemyxscale = enemysizex / enemysize;
 const int enemyyscale = enemysizey / enemysize;
 
 char texture1[texturex][texturey] = {
-"! ! ! !",
-" # # # ",
-"# #.;.#",
-" # # # ",
-"# # # #",
-" # # # ",
-" ^ ^ ~ ",
+"## # ##",
+"## # ##",
+"   #   ",
+"## # ##",
+"## # ##",
+"   #   ",
+"## # ##",
 };
 
 char texture2[texturex][texturey] = {
@@ -229,20 +230,29 @@ void newscreen(void){
 
         }
 
-    /*hp*/
-    char buffer[100];
-    itoa(hp, buffer, 10);
-    strcat(buffer, " HP");
-    for(i = 0; buffer[i] != '\0'; i++)
-        screen[IX(i, 1)] = buffer[i];
+    /*STATISTICS*/
+    char HPS[100];
+    char kills[100];
 
-    screen[w*h] = '\0';
+    itoa(hp, HPS, 10);
+    strcat(HPS, " HP | ");
+    for(i = 0; HPS[i] != '\0'; i++)
+        screen[IX(i, 1)] = HPS[i];
+
+    itoa((int)(hits / 10), kills, 10);
+    strcat(kills, " KILLS");
+
+    for(j = i; kills[j - i] != '\0'; j++)
+        screen[IX(j, 1)] = kills[j - i];
+
+    screen[w*h] = '\0'; //end of screen
     
     if(!shoot && !restart){
         guny = cos(shet * 0.2) * 2 + 16;     //Animating the gun
         exply = cos(shet * 0.2) * 2 + 23;     //Animating the explosion
     }
-    if(restart)
+
+    if(restart)                                  //Restart gun
         if(gunx < gunsizex && guny < gunsizey){
             gunx += restartspeed;
             guny += restartspeed;
@@ -251,10 +261,12 @@ void newscreen(void){
             restart = 0;
             gunx = gunsizex;
         }
-    if(shoot && se && !re && !restart){
+
+    if(shoot && se && !re && !restart){ //Check for hit to send
         if(what[(w/2)] == 2){
             statuss = 1;
             se = 0;
+            hits++;
         }
     }
     else

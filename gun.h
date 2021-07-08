@@ -1,3 +1,7 @@
+/*****************************************
+-Nikita Donskov 2021
+*****************************************/
+
 #include <stdio.h>
 
 #define gunsizex 19
@@ -20,6 +24,7 @@ int re = 0;
 int reshet = 0;
 int restart = 0;
 int se;
+int hits = 0;
 
 void gunsetup(void){
     int i;

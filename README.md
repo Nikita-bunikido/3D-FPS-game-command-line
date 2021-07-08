@@ -2,10 +2,12 @@
 ### Introduction
 
 This is a pseudo 3d game written in C programming language, and running on the windows command line.
-Engine of this game uses RayCasting technology to draw lines onscreen. It creates an illusion of a 3 dimensional game, but really
+Engine of this game uses RayCasting technology to draw lines on screen. It creates an illusion of a 3 dimensional game, but really
 it is only a 2d map.
 
-![Alt text](img/g.gif "Optional title")
+![Alt text](img/g2.gif "Optional title")
+
+---
 
 ### Installation (Windows 10)
 
@@ -30,6 +32,7 @@ Then write this adress on client and enjoy!
 
 If you want to play _offline_ write _'o' - Offline_ in the menu.
 
+
 ### Management
 
 Basic management:
@@ -37,11 +40,11 @@ W | A | S | D | SPACE
 --|:-:|:-:|:-:|:----:
 go ahead | go left | go back | go right | shoot|
 
+Mouse for camera rotation.
+
 ---
 
 ### Version 1.0
-
-__First__ version of game.
 
 Added:
 
@@ -68,8 +71,6 @@ Randomly generated stars:
 ---
 
 ### Version 2.0
-
-Second version of game.
 
 Added:
 
@@ -101,8 +102,6 @@ Working 3D floor:
 
 ### Version 3.0
 
-**LAST** version of game.
-
 Now you can play with your friends. In version 3.0 added a local network multiplayer.
 
 Added:
@@ -125,5 +124,27 @@ ASCII weapon. (Probel to shoot):
 Multiplayer test:
 
 ![Alt text](img/10.png "Optional title")
+
+
+### Version 3.1.0
+
+Added:
+- Ray-casting small optimization
+- Kills count
+- Fish-eye effect fixed
+- Collision detection (beta)
+- Fixed bugs
+
+Here is some **demonstration** of how does it work:
+
+Fixed fish eye effect (now walls are flat):
+
+![Alt text](img/11.png "Optional title")
+
+Also added a kills count (works with multiplayer):
+
+![Alt text](img/12.png "Optional title")
+
+Collision detection alos working, but not perfect for now. We will rework it later.
 
 **Enjoy!**
