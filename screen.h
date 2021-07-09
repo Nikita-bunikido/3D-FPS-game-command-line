@@ -127,7 +127,7 @@ void newscreen(void){
                 if(what[i] != 2)
                     index = flr(convert(j - top, 0, bottom - top, 0, texturex), 0, texturex - 1);    //Converting J variable to scale the line
                 else
-                    index = flr(convert(j - top, 0, bottom - top, 0, enemysizey), 0, enemysizey);    //Converting J variable to scale the lin
+                    index = flr(convert(j - top, 0, bottom - top, 0, enemysizey - 1), 0, enemysizey - 1);    //Converting J variable to scale the lin
 
                 if(distances[i] < 5){                                       //Texture view distance
                     switch(what[i]){

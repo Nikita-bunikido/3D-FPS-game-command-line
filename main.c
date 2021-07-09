@@ -44,10 +44,10 @@ double RAYCOLLISION(double x, double y, int ii){
     int i, j;
     if(x >= enx && x <= enx + enemysize && y >= eny && y <= eny + enemysize && cs != 'o'){
         what[ii] = 2;
-        if((x > enx - 0.1 && x < enx + enemysize + 0.1) && (x > enx + enemysize - 0.1 && x < enx + enemysize + 0.1))
-            offsets[ii] = fmod(y, enemysize) * enemyxscale;
-        else
+        if((x > enx - 0.01 && x < enx + enemysize + 0.01) && (x > enx + enemysize - 0.01 && x < enx + enemysize + 0.01))
             offsets[ii] = fmod(x, enemysize) * enemyxscale;
+        else
+            offsets[ii] = fmod(y, enemysize) * enemyxscale;
         return sqrt(pow((double)(x - playerX), 2) + pow((double)(y - playerY), 2));
     }
 

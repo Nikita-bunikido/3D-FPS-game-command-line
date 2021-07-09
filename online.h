@@ -4,8 +4,8 @@
 
 #include <stdio.h>
 
-double enx = tile + tile / 3;
-double eny = tile + tile / 3;
+double enx = 1.2 * 3;
+double eny = 1.2 * 3;
 
 WSADATA ws;
 SOCKET s;
