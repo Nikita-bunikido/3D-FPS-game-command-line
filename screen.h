@@ -10,6 +10,7 @@
 #include "settings.h"
 #include "gun.h"
 #include "online.h"
+#include "parser.h"
 
 extern const double DELTA_ANGLE;
 
@@ -37,8 +38,10 @@ const int enemyyscale = enemysizey / enemysize;
 int tx, ty;
 
 char shading[] = "@%%#*+=-:. ";
-char *skymap;
-char *screen;
+char *skymap = NULL;
+char *screen = NULL;
+
+char textures[wallsnum][texturex][texturey];
 
 char texture1[texturex][texturey] = {
 "## # ##",
@@ -99,8 +102,7 @@ char enemy[enemysizey][enemysizex] = {
 "| |"
 };
 
-double convert(double value,double From1,double From2,double To1,double To2)
-{
+double convert(double value,double From1,double From2,double To1,double To2){
       return (value-From1)/(From2-From1)*(To2-To1)+To1;
 }
 
@@ -131,11 +133,11 @@ void newscreen(void){
 
                 if(distances[i] < 5){                                       //Texture view distance
                     switch(what[i]){
-                        case 0: screen[IX(i,j)] = texture1[index][offsets[i]]; break;        //Show piece of texture with offset
-                        case 1: screen[IX(i,j)] = texture2[index][offsets[i]]; break;
+                        case 0: screen[IX(i,j)] = textures[0][index][offsets[i]]; break;        //Show piece of texture with offset
+                        case 1: screen[IX(i,j)] = textures[1][index][offsets[i]] == '#' ? (char)219 : textures[1][index][offsets[i]]; break;
                         case 2: screen[IX(i,j)] = enemy[index][offsets[i]]; break;
-                        case 3: screen[IX(i,j)] = texture3[index][offsets[i]]; break;
-                        case 4: screen[IX(i,j)] = texture4[index][offsets[i]]; break;
+                        case 3: screen[IX(i,j)] = textures[2][index][offsets[i]]; break;
+                        case 4: screen[IX(i,j)] = textures[3][index][offsets[i]]; break;
                     }
                 }
                 else {

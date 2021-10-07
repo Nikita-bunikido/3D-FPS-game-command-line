@@ -120,8 +120,9 @@ int main(void){
     }
 
     gunsetup();
+    parsetextures(wallsnum, textures);
 
-    printf("NSHOOT v3.1.0\n");
+    printf("----------- NSHOOT -----------\n");
     printf("Client - c\nServer - s\nOffline - o\n");
     cs = getchar();
 
@@ -184,7 +185,6 @@ int main(void){
         }
         else if(cs == 's'){
             if(recv(client_socket, data, sizeof(data), 0) > 0){
-                //printf("%f %f\n", data[0], data[1]);
                 enx = data[0];
                 eny = data[1];
                 if(data[2]){
