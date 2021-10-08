@@ -18,19 +18,14 @@ void parsetextures(int walls, char tets[][texturex][texturey]){
         strcpy(current_path, path);
         strcat(current_path, prom);
 
-        printf("%s\n", current_path);
-
         current = fopen(current_path, "r");
-        for(int py = 0; py < texturey; py++){
+        for(int py = 0; py < texturey; py++)
             for(int px = 0; px < texturex; px++){
                 do 
                     c = fgetc(current); 
                 while (c == 10);
                 tets[i][py][px] = c;
-                printf("%c", tets[i][py][px]);
             }
-            putchar(10);
-        }
         fclose(current);
     }
 }

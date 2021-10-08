@@ -18,8 +18,18 @@ First of all you need to clone repository. The following command to do it:
 
     git clone https://github.com/Nikita-bunikido/3D-FPS-game-command-line.git
 
-- #### Step 2 - open .exe file
-In repository you need to find file "NSHOOT.exe",  and run it.
+- #### Step 2 - compile it for yourself
+
+You can do it like that:
+
+    cd 3D-FPS-game-command-line
+    mingw32-make
+    
+After that you have a solved .exe file:
+
+    ./NSHOOT.exe
+
+
 
 - #### Step 3 - setting up multiplayer
 If you want to play online with your friend, you need to setup a multiplayer.
@@ -41,6 +51,45 @@ W | A | S | D | SPACE
 go ahead | go left | go back | go right | shoot|
 
 Mouse for camera rotation.
+
+### Features
+
+- All walls textures now in folder
+```3D-FPS-game-command-line\RES\```
+You can change it, and after that it will change in the game.
+It can be avaiable by .txt files parser, integrated in this repository.
+
+- Now you can generate a brightness chars in textures.
+
+```
+=======
+=     =
+=  ~  =
+= ~1~ =
+=  ~  =
+=  ;  =
+=======
+```
+
+This is a texture. It will be the same in game.
+
+```
+4444444
+4     4
+4  ~  4
+4 ~1~ 4
+4  ~  4
+4  ;  4
+4444444
+```
+
+And this is a texture, but 4 and 1
+will be visible like chars with brightness 4 and 1.
+
+You can use these characters to make a
+brigthess chars: _1234_
+
+
 
 ---
 
@@ -145,6 +194,6 @@ Also added a kills count (works with multiplayer):
 
 ![Alt text](img/12.png "Optional title")
 
-Collision detection alos working, but not perfect for now. We will rework it later.
+Collision detection also working, but not perfect for now. We will rework it later.
 
 **Enjoy!**

@@ -43,46 +43,6 @@ char *screen = NULL;
 
 char textures[wallsnum][texturex][texturey];
 
-char texture1[texturex][texturey] = {
-"## # ##",
-"## # ##",
-"   #   ",
-"## # ##",
-"## # ##",
-"   #   ",
-"## # ##",
-};
-
-char texture2[texturex][texturey] = {
-"#######",
-"#     #",
-"#  ~  #",
-"# ~.~ #",
-"#  ~  #",
-"#  ;  #",
-"#######"
-};
-
-char texture3[texturex][texturey] = {
-"#$^;:. ",
-"##*8&;.",
-"@#7^&v ",
-"$##&#. ",
-"##8^@::",
-"#;:,.,:",
-"###^#;:"
-};
-
-char texture4[texturex][texturey] = {
-"  ; ;  ",
-" ;# #; ",
-";##;##;",
-";#####;",
-" ;###; ",
-"  ;#;  ",
-"   ;   "
-};
-
 char floorr[texturex][texturey] = {
 "_ _ _ _",
 " ~ ~ ~ ",
@@ -102,8 +62,13 @@ char enemy[enemysizey][enemysizex] = {
 "| |"
 };
 
+char getnewchar(char cur){
+    char brightness[4] = {176, 177, 178, 219};
+    return (cur >= '1' && cur <= '4') ? brightness[(cur - 1) - '0'] : cur;
+}
+
 double convert(double value,double From1,double From2,double To1,double To2){
-      return (value-From1)/(From2-From1)*(To2-To1)+To1;
+    return (value-From1)/(From2-From1)*(To2-To1)+To1;
 }
 
 int flr(int val, int min, int max){
@@ -133,11 +98,11 @@ void newscreen(void){
 
                 if(distances[i] < 5){                                       //Texture view distance
                     switch(what[i]){
-                        case 0: screen[IX(i,j)] = textures[0][index][offsets[i]]; break;        //Show piece of texture with offset
-                        case 1: screen[IX(i,j)] = textures[1][index][offsets[i]] == '#' ? (char)219 : textures[1][index][offsets[i]]; break;
-                        case 2: screen[IX(i,j)] = enemy[index][offsets[i]]; break;
-                        case 3: screen[IX(i,j)] = textures[2][index][offsets[i]]; break;
-                        case 4: screen[IX(i,j)] = textures[3][index][offsets[i]]; break;
+                        case 0: screen[IX(i,j)] = getnewchar(textures[0][index][offsets[i]]); break;        //Show piece of texture with offset
+                        case 1: screen[IX(i,j)] = getnewchar(textures[1][index][offsets[i]]); break;
+                        case 2: screen[IX(i,j)] = enemy[index][offsets[i]];                   break;
+                        case 3: screen[IX(i,j)] = getnewchar(textures[2][index][offsets[i]]); break;
+                        case 4: screen[IX(i,j)] = getnewchar(textures[3][index][offsets[i]]); break;
                     }
                 }
                 else {
