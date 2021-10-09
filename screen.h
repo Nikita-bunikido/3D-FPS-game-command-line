@@ -11,6 +11,7 @@
 #include "gun.h"
 #include "online.h"
 #include "parser.h"
+#include "ui.h"
 
 extern const double DELTA_ANGLE;
 
@@ -62,19 +63,27 @@ char enemy[enemysizey][enemysizex] = {
 "| |"
 };
 
-char getnewchar(char cur){
+static char getnewchar(char cur){
     char brightness[4] = {176, 177, 178, 219};
     return (cur >= '1' && cur <= '4') ? brightness[(cur - 1) - '0'] : cur;
 }
 
-double convert(double value,double From1,double From2,double To1,double To2){
+static double convert(double value,double From1,double From2,double To1,double To2){
     return (value-From1)/(From2-From1)*(To2-To1)+To1;
 }
 
-int flr(int val, int min, int max){
+static int flr(int val, int min, int max){
     val = (val > max) ? max : val;
     val = (val < min) ? min : val;
     return val;
+}
+
+static void drawcursel(void){
+    int posx = w >> 1, posy = h >> 1;
+    screen[IX(posx, posy)] = '+';
+    screen[IX((posx-1), posy)] = screen[IX((posx+1), posy)] = '-';
+    screen[IX(posx, (posy-1))] = screen[IX(posx, (posy+1))] = '|';
+    return;
 }
 
 void newscreen(void){
@@ -161,21 +170,31 @@ void newscreen(void){
                         q += explsizex - explx + 1; 
                 }
             }
-
-
-            /*Cursel*/
-            if(i == (w / 2) && j == (h / 2))   //Simple cursel in the center of screen
-                screen[IX(i,j)] = '+';
-            if(i == (w / 2) && j == (h / 2)-1)
-                screen[IX(i,j)] = '|';
-            if(i == (w / 2) && j == (h / 2)+1)
-                screen[IX(i,j)] = '|';
-            if(i == (w / 2)-1 && j == (h / 2))
-                screen[IX(i,j)] = '-';
-            if(i == (w / 2)+1 && j == (h / 2))
-                screen[IX(i,j)] = '-'; 
-
         }
+
+    /* CURSEL DRAWING */
+    drawcursel();
+
+
+    /* MINI-MAP drawing*/
+
+    print((w - mapX), mapY + 1, "^mini-map^");
+
+    for(i = 0; i < mapX; i++)
+        for(j = 1; j < mapY+1; j++)
+            screen[IX(i + (w - mapX),j)] = (MAP[i][j-1] == '.') ? ' ' : '#';
+
+    int map_px, map_py;
+    map_px = fmod(playerX / tile, mapX);
+    map_py = fmod(playerY / tile, mapY) + 1;
+    screen[IX(map_px + (w - mapX), map_py)] = '@';
+
+
+
+
+    //message(30, 10, "GAME OVER", "press [escape] to restart..");
+
+
 
 
     /*STATISTICS*/
@@ -193,6 +212,8 @@ void newscreen(void){
         screen[IX(j, 1)] = kills[j - i];
 
     screen[w*h] = '\0'; //end of screen
+
+    /* GUN */
     
     if(!shoot && !restart){
         guny = cos(shet * 0.2) * 2 + 16;     //Animating the gun
