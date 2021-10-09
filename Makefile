@@ -7,8 +7,14 @@ MAIN=main
 
 default: build
 
-build:
-	$(CC) $(MAIN).c $(CFLAGS)
+build: .o
+	$(CC) $(MAIN).o $(CFLAGS)
 
-clean:
+clean: clean.o
 	del NSHOOT.exe
+
+clean.o:
+	del *.o
+
+.o:
+	$(CC) $(MAIN).c -c
