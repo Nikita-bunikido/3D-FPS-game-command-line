@@ -1,7 +1,3 @@
-/*****************************************
--Nikita Donskov 2021
-*****************************************/
-
 #pragma             once
 
 #define w           120
@@ -35,5 +31,7 @@
 #define coloffset   1.8f
 
 #define EXIT_CODE   69
+
+#define DESCRIPTION     "[3D FPS game running in console written on C]"
 
 #define IX(i,j) (i+j*w)

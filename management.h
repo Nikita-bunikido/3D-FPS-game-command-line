@@ -1,7 +1,3 @@
-/*****************************************
--Nikita Donskov 2021
-*****************************************/
-
 #include <windows.h>
 #include <stdio.h>
 #include <stdlib.h>
