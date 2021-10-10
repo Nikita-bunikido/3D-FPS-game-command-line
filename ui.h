@@ -4,6 +4,12 @@
 
 extern char* screen;
 
+typedef struct {
+    int sizex;
+    int sizey;
+    char img[10000];
+} Texture;
+
 static enum bds {
     upleft,
     downleft,
@@ -15,6 +21,33 @@ static enum lns {
     vertical,
     horizontal
 };
+
+void loadtexture(Texture* t, char path[]){
+    FILE* f = fopen(path, "r");
+    char c;
+    int lenx, leny;
+    lenx = leny = 0;
+    for(size_t i = 0; !feof(f); ++i){
+        c = fgetc(f);
+        if ((c != EOF) && (c != '\n')){
+            t->img[i] = c;
+        }
+        if (leny == 0)
+            lenx++;
+        if (c == '\n')
+            leny++;
+    }
+    t->sizex = lenx;
+    t->sizey = leny;
+    fclose(f);
+}
+
+void drawtexture(Texture t, int _x, int _y){
+    int i, j;
+    for(i = _x; i < _x + t.sizex-1; i++)
+        for(j = _y; j < _y + t.sizey+1; j++)
+            screen[IX(i,j)] = t.img[(i - _x) + (j - _y) * t.sizex];
+}
 
 int getcenterpos(int gl, int ol){
     return (gl >> 1) - (ol >> 1);
@@ -61,10 +94,22 @@ void message(int width, int height, char* messagemain, char* messagesecond){
     cx = getcenterpos(w, width);
     cy = getcenterpos(h, height);
     for(int i = cx; i < cx + width; i++)
-        for(int j = cy; j < cy + height; j++) //184 190
+        for(int j = cy; j < cy + height; j++)
             screen[IX(i,j)] = getborder(width, height, i - cx, j - cy);
 
     print(getcenterpos(w, strlen(messagemain)), cy + 2, messagemain);
     print(getcenterpos(w, strlen(messagesecond)), cy + 5, messagesecond);
+    return;
+}
+
+void drawloadingscreen(void){
+    for(int i = 0; i < w; i++)
+        for(int j = 0; j < h; j++)
+            screen[IX(i,j)] = getborder(w, h-1, i, j-1);
+    
+    Texture logo;
+    loadtexture(&logo, "RES\\logo.txt");
+    drawtexture(logo, getcenterpos(w, logo.sizex) + 2, 5);
+    print(getcenterpos(w, strlen(DESCRIPTION)), (h >> 1) + 2, DESCRIPTION);
     return;
 }

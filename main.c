@@ -155,6 +155,10 @@ int main(void){
             ;
     }
 
+    drawloadingscreen();
+    printf("%s", screen);
+    Sleep(3000);
+
     while(1){
         if(cameraz <= 3)
             cameraz = 3;
