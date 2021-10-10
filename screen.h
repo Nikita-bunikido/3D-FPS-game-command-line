@@ -1,7 +1,3 @@
-/*****************************************
--Nikita Donskov 2021
-*****************************************/
-
 #include <stdio.h>
 #include <time.h>
 #include <string.h>
@@ -12,6 +8,8 @@
 #include "online.h"
 #include "parser.h"
 #include "ui.h"
+
+#define nik    "Dummy 1"
 
 extern const double DELTA_ANGLE;
 
@@ -190,7 +188,7 @@ void newscreen(void){
     screen[IX(map_px + (w - mapX), map_py)] = '@';
 
 
-
+    print(getcenterpos(w, strlen(nik)), 1, nik);
 
     //message(30, 10, "GAME OVER", "press [escape] to restart..");
 
@@ -202,14 +200,12 @@ void newscreen(void){
 
     itoa(hp, HPS, 10);
     strcat(HPS, " HP | ");
-    for(i = 0; HPS[i] != '\0'; i++)
-        screen[IX(i, 1)] = HPS[i];
-
     itoa((int)(hits / 10), kills, 10);
     strcat(kills, " KILLS");
+    strcat(HPS, kills);
+    strcat(HPS, " | MODE - OFFLINE");
 
-    for(j = i; kills[j - i] != '\0'; j++)
-        screen[IX(j, 1)] = kills[j - i];
+    print(0, 1, HPS);
 
     screen[w*h] = '\0'; //end of screen
 
