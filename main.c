@@ -101,6 +101,7 @@ void castrays(void){
 
 int main(void){
     int i;
+    /* ARRAYS INITIALIZATION */
     for(i = 0; i < w; i++){
         distances[i] = 0;
         offsets[i] = 0;
@@ -111,6 +112,7 @@ int main(void){
     screen = calloc(w * h, sizeof(char));
     skymap = calloc(w * (h / 2), sizeof(char));
 
+    /* SKYMAP GENERATING */
     srand(time(NULL));
     for(i = 0; i < w * (h / 2); i++){
         if(rand()%55 == 2)
@@ -119,19 +121,34 @@ int main(void){
             skymap[i] = ' ';
     }
 
+    /* PREPARE GUN */
     gunsetup();
+    /* PARSING TEXTURES FROM TXT */
     parsetextures(wallsnum, textures);
-
+    /*
     printf("----------- NSHOOT -----------\n");
     printf("Client - c\nServer - s\nOffline - o\n");
     cs = getchar();
+    */
+
+   /* LOGO LOADING AND STARTING MENU REQUEST*/
+   Texture LOGO;
+   loadtexture(&LOGO, "RES\\logo.txt");
+   menupunct ch = getuserinput(LOGO);
+   switch (ch){
+       case mserver: cs = 's'; break;
+       case mclient: cs = 'c'; break;
+       case moffline: cs = 'o'; break;
+       case mexit: exit(0);
+   }
+
 
     if(cs == 'c' || cs == 's'){
         onlinesetup();
     }
 
-        double data[4]; //Array for local network
-        char stringh[1000]; //Ip adress
+    double data[4]; //Array for local network
+    char stringh[1000]; //Ip adress
 
 
     if(cs == 'c'){

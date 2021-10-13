@@ -4,11 +4,25 @@
 
 extern char* screen;
 
+char* menupuncts[4] = {"[online - server]",
+                    "[online - cleint]",
+                    "[offline]",
+                    "[exit]"};
+
 typedef struct {
     int sizex;
     int sizey;
     char img[10000];
 } Texture;
+
+typedef enum {
+    mserver,
+    mclient,
+    moffline,
+    mexit
+} menupunct;
+
+menupunct choosedpunct = mserver;
 
 static enum bds {
     upleft,
@@ -112,4 +126,48 @@ void drawloadingscreen(void){
     drawtexture(logo, getcenterpos(w, logo.sizex) + 2, 5);
     print(getcenterpos(w, strlen(DESCRIPTION)), (h >> 1) + 2, DESCRIPTION);
     return;
+}
+
+menupunct getuserinput(Texture logo){
+    int i;
+    int posx, posy;
+    int enter = 0;
+    int pressed = 0;
+    char prom[2];
+    prom[1] = '\0';
+    while (!enter){
+        for(i = 0; i < w; i++)
+            for(int j = 0; j < h; j++)
+                screen[IX(i,j)] = getborder(w, h-1, i, j-1);
+    
+        drawtexture(logo, getcenterpos(w, logo.sizex) + 2, 5);
+    
+        for(i = 0; i < 4; i++){
+            posx = getcenterpos(w, strlen(menupuncts[i]));
+            posy =  (i << 1) + 17;
+
+            print(posx, posy, menupuncts[i]);
+
+            /* SELECTED PUNCT DRAWING */
+            if (choosedpunct == i){
+                prom[0] = 16;
+                print(posx - 2, posy, prom);
+                prom[0] = 17;
+                print(posx + strlen(menupuncts[i]) + 1, posy, prom);
+            }
+        }
+        /* INPUT */
+    
+        enter = (GetKeyState(13) & 0x8000);
+        
+        choosedpunct += ((GetKeyState(40) & 0x8000) && !pressed);
+        choosedpunct -= ((GetKeyState(38) & 0x8000) && !pressed);
+
+        pressed = (GetKeyState(40) & 0x8000) || (GetKeyState(38) & 0x8000);
+
+        printf("%s", screen);
+
+        Sleep(20);
+    }
+    return choosedpunct;
 }
