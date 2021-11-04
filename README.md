@@ -1,4 +1,12 @@
 ## 3D-FPS-game-command-line
+
+![languages count](https://img.shields.io/github/languages/count/Nikita-bunikido/3D-FPS-game-command-line)
+![lines of code](https://img.shields.io/tokei/lines/github/Nikita-bunikido/3D-FPS-game-command-line)
+![license](https://img.shields.io/github/license/Nikita-bunikido/3D-FPS-game-command-line)
+![stars count](https://img.shields.io/github/stars/Nikita-bunikido/3D-FPS-game-command-line?style=social)
+![forks count](https://img.shields.io/github/forks/Nikita-bunikido/3D-FPS-game-command-line?style=social)
+![yt subs count](https://img.shields.io/youtube/channel/subscribers/UCW3RoBYtEBnrX_dOI3ELlxA?style=social)
+
 ### Introduction
 
 This is a pseudo 3d game written in C programming language, and running on the windows command line.
